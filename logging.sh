@@ -12,13 +12,44 @@ SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
 source "$SCRIPTPATH"/color.sh
 
 #######################################
+# date - outputs date and time in a
+# standard format. That format being
+# Year.Month.Day-Hour:Minute:Seconds
+#
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+# Outputs:
+#   outputs the date and time in a
+#   standard format
+#######################################
+log::date(){
+   echo $(date "+%Y.%m.%d-%H:%M:%S")
+}
+
+#######################################
+# panic - logs message and exits 
+#
+# Arguments:
+#  $*: message
+#######################################
+log::panic(){
+    d=$(log::date)
+    echo -e "${Red}[$d PANIC]:${Color_Off} $*" >&2
+    exit 1
+}
+
+#######################################
 # Err handling and logging
 #
 # Arguments:
 #   $*: Error message
 #######################################
 log::err(){
-    d=$(date "+%Y.%m.%d-%H:%M:%S")
+    d=$(log::date)
     echo -e "${Red}[$d ERROR]:${Color_Off} $*" >&2
 }
 
@@ -29,7 +60,7 @@ log::err(){
 #   $*: Info message
 #######################################
 log::info(){
-    d=$(date "+%Y.%m.%d-%H:%M:%S")
+    d=$(log::date)
     echo -e "${Blue}[$d INFO]:${Color_Off} $*"
 }
 
@@ -38,9 +69,10 @@ log::info(){
 #
 # Arguments:
 #   $*: Debug message
+######################################
 log::debug(){
     if [[ "${DEBUG}" == "true" ]]; then
-        d=$(date "+%Y.%m.%d-%H:%M:%S")
-        echo -e "${Yellow}[$d DEBUG]:${Color_Off} $*"
+	d=$(log::date)
+	echo -e "${Yellow}[$d DEBUG]:${Color_Off} $*"
     fi
 }

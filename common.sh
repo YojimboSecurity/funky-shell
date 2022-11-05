@@ -12,7 +12,7 @@ SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
 source "$SCRIPTPATH"/logging.sh
 
 #######################################
-# find_loop - is a wrapper around find
+# find_file is a wrapper around find
 # and loops over find in a safe way and
 # outputs the results. Refer to
 # https://www.shellcheck.net/wiki/SC2044
@@ -33,7 +33,7 @@ source "$SCRIPTPATH"/logging.sh
 # Outputs:
 #   outputs the results of find
 #######################################
-common::find_file_loop(){
+common::find_file(){
   local dir="$1"
   local search="$2"
   local func=$3
