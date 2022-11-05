@@ -45,3 +45,32 @@ common::find_file(){
     $func "$file"
   done < <(find "$dir" -type f -iname "$search" -print0)
 }
+
+
+#######################################
+# string_contains - check if the string 
+# contains substring.
+# 
+# Globals:
+#   None
+# Arguments:
+#   $1 - string
+#   $2 - substring
+# Returns:
+#   returns true if string contains
+#   substring and false if it does not.
+# Outputs:
+#    None
+#######################################
+common::string_contains(){
+    local string="$1"
+    local substring="$2"
+    if [[ "$string" == *"$substring"* ]]; then
+	    # true = 0
+	    return 0
+    else
+	    # false = 1
+	    return 1
+    fi
+}
+
