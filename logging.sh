@@ -8,7 +8,7 @@
 # I also use shellcheck to make sure that I am not using any bashisms.
 # https://github.com/koalaman/shellcheck
 
-SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
 source "$SCRIPTPATH"/color.sh
 
 #######################################
@@ -19,7 +19,7 @@ source "$SCRIPTPATH"/color.sh
 #######################################
 log::err(){
     d=$(date "+%Y.%m.%d-%H:%M:%S")
-    echo -e "$Red[$d ERROR]:$Color_Off $*" >&2
+    echo -e "${Red}[$d ERROR]:${Color_Off} $*" >&2
 }
 
 #######################################
@@ -30,7 +30,7 @@ log::err(){
 #######################################
 log::info(){
     d=$(date "+%Y.%m.%d-%H:%M:%S")
-    echo -e "$Blue[$d INFO]:$Color_Off $*"
+    echo -e "${Blue}[$d INFO]:${Color_Off} $*"
 }
 
 #######################################
@@ -41,6 +41,6 @@ log::info(){
 log::debug(){
     if [[ "${DEBUG}" == "true" ]]; then
         d=$(date "+%Y.%m.%d-%H:%M:%S")
-        echo -e "$Yellow[$d DEBUG]:$Color_Off $*"
+        echo -e "${Yellow}[$d DEBUG]:${Color_Off} $*"
     fi
 }

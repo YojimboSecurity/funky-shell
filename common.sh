@@ -8,7 +8,7 @@
 # I also use shellcheck to make sure that I am not using any bashisms.
 # https://github.com/koalaman/shellcheck
 
-SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit 1 ; pwd -P )"
 source "$SCRIPTPATH"/logging.sh
 
 #######################################
@@ -25,6 +25,9 @@ source "$SCRIPTPATH"/logging.sh
 # Arguments:
 #   $1 - directory to search
 #   $2 - find options
+#   $3 - function to do work in the loop.
+#        This function needs to take the
+#        file as an argument
 # Returns:
 #   None
 # Outputs:
@@ -33,10 +36,12 @@ source "$SCRIPTPATH"/logging.sh
 common::find_file_loop(){
   local dir="$1"
   local search="$2"
+  local func=$3
   log::debug "dir:$dir search:$search"
   while IFS= read -r -d '' file
   do
     # do something with "$file" here
-    echo "$file"
+    log::debug "$file"
+    $func "$file"
   done < <(find "$dir" -type f -iname "$search" -print0)
 }
