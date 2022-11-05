@@ -8,7 +8,9 @@
 # I also use shellcheck to make sure that I am not using any bashisms.
 # https://github.com/koalaman/shellcheck
 
-. ./tools/lib/color.sh
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+source "$SCRIPTPATH"/color.sh
 
 #######################################
 # Err handling and logging
